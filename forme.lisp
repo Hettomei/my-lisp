@@ -61,14 +61,18 @@
 (defun cls()
   (format t "~A[H~@*~A[J" #\escape))
 
-(loop
-  (dotimes (i 20)
-    (cls)
-    (losange 6 i)
-    (sleep 0.05))
-  (loop for i from 19 downto 1 do
-        (cls)
-        (losange 6 i)
-        (sleep 0.05)))
+(defun move()
+  (loop
+    (dotimes (i 20)
+      (cls)
+      (losange 6 i)
+      (sleep 0.05))
+    (loop for i from 19 downto 1 do
+          (cls)
+          (losange 6 i)
+          (sleep 0.05))))
 
-(format t "~%")
+(handler-case (move)
+  (sb-sys:interactive-interrupt ()
+                                (format t "Interrupt~%")
+                                (sb-ext:quit)))
