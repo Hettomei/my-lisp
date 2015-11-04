@@ -48,10 +48,27 @@
 (center-line 5 12)
 (format t "~%")
 
-(dotimes (i 10)
-  (center-line (+ (* i 2) 1) (+ 15 i)))
-(loop for i from 10 downto 0 do
-  (center-line (+ (* i 2) 1) (+ 15 i)))
+(defun losange (n &optional (space 0))
+  (dotimes (i n)
+    (center-line (+ (* i 2) 1) (+ n i 1 space)))
+  (loop for i from n downto 0 do
+        (center-line (+ (* i 2) 1) (+ n i 1 space))))
+
+(losange 10)
+(losange 6)
+(losange 29)
+
+(defun cls()
+  (format t "~A[H~@*~A[J" #\escape))
+
+(loop
+  (dotimes (i 20)
+    (cls)
+    (losange 6 i)
+    (sleep 0.05))
+  (loop for i from 19 downto 1 do
+        (cls)
+        (losange 6 i)
+        (sleep 0.05)))
 
 (format t "~%")
-(format t "~a ~%" (get-decoded-time))
